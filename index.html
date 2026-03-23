@@ -327,9 +327,13 @@ function atualizarPainel() {
 }
 
 function limparDados() {
-  if (!confirm('Tem certeza que deseja apagar todas as confirmacoes?')) return;
+  var senha = prompt('Digite a senha para apagar os dados:');
+  if (senha === null) return;
+  if (senha !== SENHA) { alert('Senha incorreta! Os dados não foram apagados.'); return; }
+  if (!confirm('Tem certeza? Esta ação apagará TODAS as confirmações!')) return;
   saveGuests([]);
   atualizarPainel();
+  alert('Dados apagados com sucesso.');
 }
 </script>
 </body>
