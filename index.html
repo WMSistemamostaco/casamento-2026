@@ -62,6 +62,9 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 .ring:last-child{margin-left:-10px;}
 .success-title{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:400;color:var(--dark);margin-bottom:0.5rem;}
 .success-msg{font-size:15px;color:var(--mid);line-height:1.7;font-style:italic;}
+.btn-maps{display:inline-flex;align-items:center;gap:6px;margin-top:10px;padding:7px 18px;font-family:'EB Garamond',serif;font-size:13px;letter-spacing:0.08em;background:transparent;border:1px solid var(--gold);color:var(--gold);border-radius:20px;cursor:pointer;text-decoration:none;transition:background 0.2s,color 0.2s;}
+.btn-maps:hover{background:var(--gold);color:white;}
+.btn-maps svg{flex-shrink:0;}
 .painel-btn{width:100%;padding:10px;font-family:'EB Garamond',serif;font-size:13px;letter-spacing:0.1em;background:transparent;border:1px solid var(--light);color:var(--mid);border-radius:8px;cursor:pointer;margin-bottom:1rem;transition:background 0.2s;}
 .painel-btn:hover{background:var(--gold-pale);}
 .painel-overlay{display:none;position:fixed;inset:0;background:rgba(44,36,22,0.6);z-index:1000;align-items:center;justify-content:center;padding:1rem;}
@@ -131,6 +134,10 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
       <div class="location-label">Local da cerimônia</div>
       <div class="location-name">Matriz de Ibiporã</div>
       <div class="location-sub">Nossa Senhora da Paz</div>
+      <a class="btn-maps" href="https://maps.app.goo.gl/BLYDj58u3B8XXB2r8" target="_blank">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+        Me leve até lá
+      </a>
     </div>
     <div class="divider"><div class="div-line"></div><div class="div-diamond"></div><div class="div-line"></div></div>
     <p class="verse">"O amor é paciente, o amor é bondoso... tudo suporta, tudo crê, tudo espera, tudo persevera."<cite>1 Coríntios 13:4–7</cite></p>
