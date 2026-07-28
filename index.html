@@ -17,7 +17,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 
 <style>
-:root{--gold:#9A7B4F;--gold-light:#C9A96E;--gold-pale:#F8F4ED;--cream:#FAF7F2;--dark:#2C2416;--mid:#6B5B3E;--light:#E8DFD0;}
+:root{--gold:#9A7B4F;--gold-light:#C9A96E;--gold-pale:#F8F4ED;--cream:#F5F0E6;--card-bg:#FAF5E8;--dark:#2C2416;--mid:#6B5B3E;--light:#E8DFD0;}
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
 body{background:var(--cream);font-family:'EB Garamond',Georgia,serif;color:var(--dark);min-height:100vh;overflow-x:hidden;}
@@ -25,8 +25,8 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 .container{max-width:580px;margin:0 auto;padding:2rem 1.25rem 3rem;position:relative;z-index:1;}
 .cover-photo{width:100%;height:auto;border-radius:16px;margin-bottom:1.5rem;display:block;border:1px solid var(--light);}
 
-/* Convite Clássico Principal */
-.invite-card{background:white;border:1px solid var(--light);border-radius:16px;padding:3rem 2rem;text-align:center;margin-bottom:1.5rem;position:relative;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.02);}
+/* Convite Clássico Principal - Cor do Fundo Ajustada para o tom da Ilustração */
+.invite-card{background:var(--card-bg);border:1px solid var(--light);border-radius:16px;padding:3rem 2rem;text-align:center;margin-bottom:1.5rem;position:relative;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.03);}
 .ornament{position:absolute;width:90px;height:90px;opacity:0.25;}
 .orn-tl{top:0;left:0;}.orn-tr{top:0;right:0;transform:scaleX(-1);}.orn-bl{bottom:0;left:0;transform:scaleY(-1);}.orn-br{bottom:0;right:0;transform:scale(-1);}
 .eyelet{display:inline-block;font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--mid);margin-bottom:1.2rem;font-weight:500;}
@@ -45,7 +45,7 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 .location-label{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--mid);margin-bottom:6px;}
 .location-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:500;color:var(--dark);}
 .location-sub{font-size:13px;color:var(--mid);font-style:italic;margin-top:2px;}
-.btn-maps{display:inline-flex;align-items:center;gap:6px;padding:9px 22px;margin-top:14px;font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:500;background:transparent;border:1.5px solid var(--gold-light);color:var(--mid);border-radius:30px;text-decoration:none;transition:background 0.2s,color 0.2s;}
+.btn-maps{display:inline-flex;align-items:center;gap:6px;padding:9px 22px;margin-top:14px;font-family:'Cormorant Garamond',serif;font-size:15px;font-weight:500;background:rgba(255,255,255,0.5);border:1.5px solid var(--gold-light);color:var(--mid);border-radius:30px;text-decoration:none;transition:background 0.2s,color 0.2s;}
 .btn-maps:hover{background:var(--gold);color:white;border-color:var(--gold);}
 .church-farewell{font-size:14px;color:var(--mid);font-style:italic;margin-top:12px;letter-spacing:0.02em;}
 
@@ -54,9 +54,9 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 .btn-main-rsvp{display:block;width:100%;padding:14px;font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;letter-spacing:0.03em;background:var(--gold);color:white;border:none;border-radius:8px;cursor:pointer;text-align:center;box-shadow:0 2px 10px rgba(154,123,79,0.2);transition:background 0.2s;text-decoration:none;}
 .btn-main-rsvp:hover{background:var(--gold-light);}
 .btn-main-rsvp.btn-pizza{background:transparent;border:1.5px solid var(--gold);color:var(--dark);}
-.btn-main-rsvp.btn-pizza:hover{background:var(--gold-pale);}
+.btn-main-rsvp.btn-pizza:hover{background:rgba(255,255,255,0.6);}
 .btn-main-rsvp.btn-gift{background:transparent;border:1.5px solid var(--gold-light);color:var(--dark);box-shadow:none;}
-.btn-main-rsvp.btn-gift:hover{background:var(--gold-pale);border-color:var(--gold);}
+.btn-main-rsvp.btn-gift:hover{background:rgba(255,255,255,0.6);border-color:var(--gold);}
 
 /* Modal de Confirmação (RSVP) */
 .rsvp-overlay{display:none;position:fixed;inset:0;background:rgba(44,36,22,0.7);z-index:999;align-items:center;justify-content:center;padding:1rem;}
@@ -299,7 +299,6 @@ const WPP = '5543988145521';
 const SENHA = 'Amanda2026';
 const KEY = 'casamento_aw2026_guests';
 
-// Inicialização segura do EmailJS (evita travar o JS caso haja bloqueio de extensão)
 if (typeof emailjs !== 'undefined') {
   try {
     emailjs.init({ publicKey: PUBLIC_KEY });
@@ -315,7 +314,6 @@ function abrirRSVP(aba){
   document.getElementById('formCard').style.display = 'block';
   document.getElementById('successCard').style.display = 'none';
   
-  // Reseta o estado do botão e limpa os campos
   const btn = document.getElementById('confirmBtn');
   if(btn) btn.disabled = false;
   
@@ -340,4 +338,5 @@ function fecharRSVPFora(e){
 }
 
 function trocarAba(aba){
-  abaAtua
+  abaAtual = aba;
+  const isIgreja = aba === 'i
