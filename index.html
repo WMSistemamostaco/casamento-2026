@@ -49,12 +49,14 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 .btn-maps:hover{background:var(--gold);color:white;border-color:var(--gold);}
 .church-farewell{font-size:14px;color:var(--mid);font-style:italic;margin-top:12px;letter-spacing:0.02em;}
 
-/* Botões de Confirmação na Tela Principal */
+/* Botões de Ação na Tela Principal */
 .btn-group-rsvp{display:flex;flex-direction:column;gap:10px;margin-top:1.5rem;}
-.btn-main-rsvp{display:block;width:100%;padding:14px;font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;letter-spacing:0.03em;background:var(--gold);color:white;border:none;border-radius:8px;cursor:pointer;text-align:center;box-shadow:0 2px 10px rgba(154,123,79,0.2);transition:background 0.2s;}
+.btn-main-rsvp{display:block;width:100%;padding:14px;font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;letter-spacing:0.03em;background:var(--gold);color:white;border:none;border-radius:8px;cursor:pointer;text-align:center;box-shadow:0 2px 10px rgba(154,123,79,0.2);transition:background 0.2s;text-decoration:none;}
 .btn-main-rsvp:hover{background:var(--gold-light);}
 .btn-main-rsvp.btn-pizza{background:transparent;border:1.5px solid var(--gold);color:var(--dark);}
 .btn-main-rsvp.btn-pizza:hover{background:var(--gold-pale);}
+.btn-main-rsvp.btn-gift{background:transparent;border:1.5px solid var(--gold-light);color:var(--dark);box-shadow:none;}
+.btn-main-rsvp.btn-gift:hover{background:var(--gold-pale);border-color:var(--gold);}
 
 /* Modal de Confirmação (RSVP) */
 .rsvp-overlay{display:none;position:fixed;inset:0;background:rgba(44,36,22,0.7);z-index:999;align-items:center;justify-content:center;padding:1rem;}
@@ -98,7 +100,7 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 
 /* Painel */
 .painel-btn{width:100%;padding:10px;font-size:13px;letter-spacing:0.1em;background:transparent;border:1px solid var(--light);color:var(--mid);border-radius:8px;cursor:pointer;margin-bottom:1rem;}
-.painel-overlay{display:none;position fixed;inset:0;background:rgba(44,36,22,0.6);z-index:1000;align-items:center;justify-content:center;padding:1rem;}
+.painel-overlay{display:none;position:fixed;inset:0;background:rgba(44,36,22,0.6);z-index:1000;align-items:center;justify-content:center;padding:1rem;}
 .painel-overlay.active{display:flex;}
 .painel-modal{background:var(--cream);border-radius:16px;padding:2rem;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;}
 .painel-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;}
@@ -147,10 +149,11 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
       <div class="church-farewell">Os noivos se despedem na igreja.</div>
     </div>
 
-    <!-- Botões Separados para Cada Evento -->
+    <!-- Botões Principais -->
     <div class="btn-group-rsvp">
       <button class="btn-main-rsvp" onclick="abrirRSVP('igreja')">⛪ Confirmar Presença na Igreja</button>
       <button class="btn-main-rsvp btn-pizza" onclick="abrirRSVP('pizza')">🍕 Confirmar Presença na Pizzaria</button>
+      <a class="btn-main-rsvp btn-gift" href="https://noivos.casar.com/amanda-e-wilian" target="_blank">🎁 Lista de Presentes</a>
     </div>
   </div>
 
@@ -172,7 +175,6 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
     </div>
 
     <div id="formCard">
-      <!-- Nome Apenas (Telefone e E-mail Removidos) -->
       <div class="field-group">
         <label for="guestName">Seu Nome Completo *</label>
         <input type="text" id="guestName" placeholder="Insira seu nome completo" maxlength="80"/>
@@ -328,120 +330,4 @@ function trocarAba(aba){
   document.getElementById('statusMsg').textContent = '';
 }
 
-function getGuests(){ try{ return JSON.parse(localStorage.getItem(KEY)) || []; } catch(e){ return []; } }
-function saveGuests(list){ localStorage.setItem(KEY, JSON.stringify(list)); }
-
-async function confirmar(){
-  const nome = document.getElementById('guestName').value.trim();
-  const obs = document.getElementById('guestObs').value.trim();
-  const statusMsg = document.getElementById('statusMsg');
-  const btn = document.getElementById('confirmBtn');
-
-  if(!nome){
-    statusMsg.textContent = 'Por favor, informe seu nome completo.';
-    return;
-  }
-
-  btn.disabled = true;
-  statusMsg.textContent = 'Enviando confirmação...';
-
-  const isIgreja = abaAtual === 'igreja';
-  const adIgreja = isIgreja ? parseInt(document.getElementById('qtdAdultosIgreja').value) : 0;
-  const crIgreja = isIgreja ? parseInt(document.getElementById('qtdCriancasIgreja').value) : 0;
-
-  const adPizza = !isIgreja ? parseInt(document.getElementById('qtdAdultosPizza').value) : 0;
-  const crPizza = !isIgreja ? parseInt(document.getElementById('qtdCriancasPizza').value) : 0;
-
-  const now = new Date().toLocaleString('pt-BR');
-  const list = getGuests();
-  const record = { 
-    nome, obs, time: now,
-    iraIgreja: isIgreja, adIgreja, crIgreja,
-    iraPizza: !isIgreja, adPizza, crPizza
-  };
-  list.push(record);
-  saveGuests(list);
-
-  const eventoTexto = isIgreja 
-    ? `⛪ Cerimônia na Igreja (${adIgreja} adulto(s), ${crIgreja} criança(s))` 
-    : `🍕 Rodízio na Pizzaria (${adPizza} adulto(s), ${crPizza} criança(s))`;
-
-  // EmailJS
-  try {
-    await emailjs.send(SERVICE, TEMPLATE, {
-      guest_name: nome,
-      guest_count: eventoTexto,
-      confirmed_at: now,
-      tipo: `Obs: ${obs || 'Nenhuma'}`
-    });
-  } catch(e){ console.error(e); }
-
-  // Tela de Sucesso
-  document.getElementById('formCard').style.display = 'none';
-  const successCard = document.getElementById('successCard');
-  successCard.style.display = 'block';
-
-  let msgSucesso = `Obrigado, <strong>${nome}</strong>!<br>Sua presença foi confirmada para:<br><br><strong>${eventoTexto}</strong>`;
-  document.getElementById('successMsg').innerHTML = msgSucesso;
-
-  // Texto do WhatsApp
-  const wppText = encodeURIComponent(
-    `Olá! Sou ${nome} e confirmei presença no casamento:\n\n` +
-    `📌 *Evento:* ${eventoTexto}\n` +
-    (obs ? `💬 *Obs:* ${obs}` : '')
-  );
-  document.getElementById('wppBtn').href = 'https://wa.me/' + WPP + '?text=' + wppText;
-  btn.disabled = false;
-}
-
-/* Painel */
-function abrirPainel(){ document.getElementById('painelOverlay').classList.add('active'); }
-function fecharPainel(){ document.getElementById('painelOverlay').classList.remove('active'); }
-function fecharPainelFora(e){ if(e.target === document.getElementById('painelOverlay')) fecharPainel(); }
-
-function verificarSenha(){
-  if(document.getElementById('senhaInput').value === SENHA){
-    document.getElementById('lockScreen').style.display = 'none';
-    document.getElementById('painelContent').style.display = 'block';
-    atualizarPainel();
-  } else {
-    document.getElementById('lockError').textContent = 'Senha incorreta.';
-  }
-}
-
-function atualizarPainel(){
-  const list = getGuests();
-  const totIgreja = list.reduce((acc, c) => acc + (c.iraIgreja ? (c.adIgreja + c.crIgreja) : 0), 0);
-  const totPizza = list.reduce((acc, c) => acc + (c.iraPizza ? (c.adPizza + c.crPizza) : 0), 0);
-  
-  document.getElementById('totalIgreja').textContent = totIgreja;
-  document.getElementById('totalPizza').textContent = totPizza;
-
-  const ul = document.getElementById('painelList');
-  ul.innerHTML = '';
-  if(!list.length){
-    ul.innerHTML = '<li style="font-size:12px;color:var(--mid);text-align:center;padding:1rem;">Nenhuma resposta recebida.</li>';
-  } else {
-    list.forEach(g => {
-      const li = document.createElement('li');
-      li.className = 'guest-item';
-      li.innerHTML = `
-        <strong>${g.nome}</strong><br>
-        ⛪ Igreja: ${g.iraIgreja ? `✅ (${g.adIgreja} ad, ${g.crIgreja} cr)` : '—'}<br>
-        🍕 Pizza: ${g.iraPizza ? `✅ (${g.adPizza} ad, ${g.crPizza} cr)` : '—'}<br>
-        ${g.obs ? `<small>Obs: ${g.obs}</small>` : ''}
-      `;
-      ul.appendChild(li);
-    });
-  }
-}
-
-function limparDados(){
-  if(confirm('Tem certeza que deseja apagar todos os registros do painel?')){
-    localStorage.removeItem(KEY);
-    atualizarPainel();
-  }
-}
-</script>
-</body>
-</html>
+function getGuests(){ try{ return JSON.parse(localStorage.getItem(KEY)) || []
