@@ -25,7 +25,7 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 .container{max-width:580px;margin:0 auto;padding:2rem 1.25rem 3rem;position:relative;z-index:1;}
 .cover-photo{width:100%;height:auto;border-radius:16px;margin-bottom:1.5rem;display:block;border:1px solid var(--light);}
 
-/* Convite Clássico Principal - Cor do Fundo Ajustada para o tom da Ilustração */
+/* Convite Clássico Principal */
 .invite-card{background:var(--card-bg);border:1px solid var(--light);border-radius:16px;padding:3rem 2rem;text-align:center;margin-bottom:1.5rem;position:relative;overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.03);}
 .ornament{position:absolute;width:90px;height:90px;opacity:0.25;}
 .orn-tl{top:0;left:0;}.orn-tr{top:0;right:0;transform:scaleX(-1);}.orn-bl{bottom:0;left:0;transform:scaleY(-1);}.orn-br{bottom:0;right:0;transform:scale(-1);}
@@ -151,13 +151,13 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 
     <!-- Botões Principais -->
     <div class="btn-group-rsvp">
-      <button class="btn-main-rsvp" onclick="abrirRSVP('igreja')">⛪ Confirmar Presença na Igreja</button>
-      <button class="btn-main-rsvp btn-pizza" onclick="abrirRSVP('pizza')">🍕 Confirmar Presença na Pizzaria</button>
+      <button type="button" class="btn-main-rsvp" onclick="abrirRSVP('igreja')">⛪ Confirmar Presença na Igreja</button>
+      <button type="button" class="btn-main-rsvp btn-pizza" onclick="abrirRSVP('pizza')">🍕 Confirmar Presença na Pizzaria</button>
       <a class="btn-main-rsvp btn-gift" href="https://noivos.casar.com/amanda-e-wilian" target="_blank">🎁 Lista de Presentes</a>
     </div>
   </div>
 
-  <button class="painel-btn" onclick="abrirPainel()">⚙️ Painel dos Noivos</button>
+  <button type="button" class="painel-btn" onclick="abrirPainel()">⚙️ Painel dos Noivos</button>
 </div>
 
 <!-- Janela Popup / Modal de Confirmação -->
@@ -165,13 +165,13 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
   <div class="rsvp-modal">
     <div class="rsvp-modal-header">
       <span class="rsvp-modal-title" id="modalTitle">Confirmar Presença</span>
-      <button class="rsvp-modal-close" onclick="fecharRSVP()">&times;</button>
+      <button type="button" class="rsvp-modal-close" onclick="fecharRSVP()">&times;</button>
     </div>
 
     <!-- Abas para Escolha de Evento -->
     <div class="rsvp-tabs">
-      <button class="tab-btn" id="tabIgrejaBtn" onclick="trocarAba('igreja')">⛪ Igreja</button>
-      <button class="tab-btn" id="tabPizzaBtn" onclick="trocarAba('pizza')">🍕 Pizzaria</button>
+      <button type="button" class="tab-btn" id="tabIgrejaBtn" onclick="trocarAba('igreja')">⛪ Igreja</button>
+      <button type="button" class="tab-btn" id="tabPizzaBtn" onclick="trocarAba('pizza')">🍕 Pizzaria</button>
     </div>
 
     <div id="formCard">
@@ -250,7 +250,7 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
         <textarea id="guestObs" rows="2" placeholder="Recado para os noivos ou observação..."></textarea>
       </div>
 
-      <button class="btn-confirm" id="confirmBtn" onclick="confirmar()">Confirmar Presença</button>
+      <button type="button" class="btn-confirm" id="confirmBtn" onclick="confirmar()">Confirmar Presença</button>
       <div class="status-msg" id="statusMsg"></div>
     </div>
 
@@ -270,12 +270,12 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
   <div class="painel-modal">
     <div class="painel-header">
       <span class="painel-title">Painel dos Noivos</span>
-      <button class="painel-close" onclick="fecharPainel()">&times;</button>
+      <button type="button" class="painel-close" onclick="fecharPainel()">&times;</button>
     </div>
     
     <div id="lockScreen" style="text-align:center;">
       <input type="password" id="senhaInput" placeholder="Senha de acesso" style="width:100%;padding:10px;margin-bottom:8px;border:1px solid var(--light);border-radius:8px;text-align:center;"/>
-      <button onclick="verificarSenha()" style="width:100%;padding:10px;background:var(--gold);color:white;border:none;border-radius:8px;cursor:pointer;">Entrar</button>
+      <button type="button" onclick="verificarSenha()" style="width:100%;padding:10px;background:var(--gold);color:white;border:none;border-radius:8px;cursor:pointer;">Entrar</button>
       <div id="lockError" style="color:#c0392b;font-size:12px;margin-top:6px;"></div>
     </div>
 
@@ -285,7 +285,7 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
         <div style="margin-top:4px;">🍕 <strong>Confirmados Pizzaria:</strong> <span id="totalPizza">0</span> pessoas</div>
       </div>
       <ul class="guest-list" id="painelList"></ul>
-      <button onclick="limparDados()" style="width:100%;padding:8px;background:#c0392b;color:white;border:none;border-radius:6px;margin-top:1rem;cursor:pointer;font-size:12px;">🗑️ Limpar Todos os Dados</button>
+      <button type="button" onclick="limparDados()" style="width:100%;padding:8px;background:#c0392b;color:white;border:none;border-radius:6px;margin-top:1rem;cursor:pointer;font-size:12px;">🗑️ Limpar Todos os Dados</button>
     </div>
   </div>
 </div>
@@ -339,4 +339,154 @@ function fecharRSVPFora(e){
 
 function trocarAba(aba){
   abaAtual = aba;
-  const isIgreja = aba === 'i
+  const isIgreja = aba === 'igreja';
+  
+  document.getElementById('tabIgrejaBtn').className = isIgreja ? 'tab-btn active' : 'tab-btn';
+  document.getElementById('tabPizzaBtn').className = !isIgreja ? 'tab-btn active' : 'tab-btn';
+
+  document.getElementById('formIgreja').style.display = isIgreja ? 'block' : 'none';
+  document.getElementById('formPizza').style.display = !isIgreja ? 'block' : 'none';
+
+  document.getElementById('modalTitle').textContent = isIgreja ? 'Confirmar Presença • Igreja' : 'Confirmar Presença • Pizzaria';
+  
+  const statusMsg = document.getElementById('statusMsg');
+  if(statusMsg) statusMsg.textContent = '';
+}
+
+function getGuests(){
+  try{
+    return JSON.parse(localStorage.getItem(KEY)) || [];
+  } catch(e){
+    return [];
+  }
+}
+
+function saveGuests(list){
+  try{
+    localStorage.setItem(KEY, JSON.stringify(list));
+  } catch(e){
+    console.warn('LocalStorage bloqueado pelo navegador:', e);
+  }
+}
+
+function confirmar(){
+  const nomeInput = document.getElementById('guestName');
+  const nome = nomeInput ? nomeInput.value.trim() : '';
+  const obsInput = document.getElementById('guestObs');
+  const obs = obsInput ? obsInput.value.trim() : '';
+  const statusMsg = document.getElementById('statusMsg');
+  const btn = document.getElementById('confirmBtn');
+
+  if(!nome){
+    if(statusMsg) statusMsg.textContent = 'Por favor, informe seu nome completo.';
+    return;
+  }
+
+  if(btn) btn.disabled = true;
+
+  const isIgreja = abaAtual === 'igreja';
+  const adIgreja = isIgreja ? parseInt(document.getElementById('qtdAdultosIgreja').value) : 0;
+  const crIgreja = isIgreja ? parseInt(document.getElementById('qtdCriancasIgreja').value) : 0;
+
+  const adPizza = !isIgreja ? parseInt(document.getElementById('qtdAdultosPizza').value) : 0;
+  const crPizza = !isIgreja ? parseInt(document.getElementById('qtdCriancasPizza').value) : 0;
+
+  const now = new Date().toLocaleString('pt-BR');
+  const list = getGuests();
+  const record = { 
+    nome, obs, time: now,
+    iraIgreja: isIgreja, adIgreja, crIgreja,
+    iraPizza: !isIgreja, adPizza, crPizza
+  };
+  
+  // 1. Salva localmente (com proteção para navegadores mobile restritos)
+  list.push(record);
+  saveGuests(list);
+
+  const eventoTexto = isIgreja 
+    ? `⛪ Cerimônia na Igreja (${adIgreja} adulto(s), ${crIgreja} criança(s))` 
+    : `🍕 Rodízio na Pizzaria (${adPizza} adulto(s), ${crPizza} criança(s))`;
+
+  // 2. Transição INSTANTÂNEA para a tela de sucesso (sem travar esperando resposta de rede)
+  document.getElementById('formCard').style.display = 'none';
+  const successCard = document.getElementById('successCard');
+  if(successCard) successCard.style.display = 'block';
+
+  let msgSucesso = `Obrigado, <strong>${nome}</strong>!<br>Sua presença foi confirmada para:<br><br><strong>${eventoTexto}</strong>`;
+  const successMsg = document.getElementById('successMsg');
+  if(successMsg) successMsg.innerHTML = msgSucesso;
+
+  // 3. Prepara o link direto para o WhatsApp
+  const wppText = encodeURIComponent(
+    `Olá! Sou ${nome} e confirmei presença no casamento:\n\n` +
+    `📌 *Evento:* ${eventoTexto}\n` +
+    (obs ? `💬 *Obs:* ${obs}` : '')
+  );
+  const wppBtn = document.getElementById('wppBtn');
+  if(wppBtn) wppBtn.href = 'https://wa.me/' + WPP + '?text=' + wppText;
+
+  // 4. Disparo assíncrono do e-mail em segundo plano
+  if (typeof emailjs !== 'undefined') {
+    emailjs.send(SERVICE, TEMPLATE, {
+      guest_name: nome,
+      guest_count: eventoTexto,
+      confirmed_at: now,
+      tipo: `Obs: ${obs || 'Nenhuma'}`
+    }, PUBLIC_KEY).catch(function(err){
+      console.warn('Envio do EmailJS em segundo plano falhou:', err);
+    });
+  }
+
+  if(btn) btn.disabled = false;
+}
+
+function abrirPainel(){ document.getElementById('painelOverlay').classList.add('active'); }
+function fecharPainel(){ document.getElementById('painelOverlay').classList.remove('active'); }
+function fecharPainelFora(e){ if(e.target === document.getElementById('painelOverlay')) fecharPainel(); }
+
+function verificarSenha(){
+  if(document.getElementById('senhaInput').value === SENHA){
+    document.getElementById('lockScreen').style.display = 'none';
+    document.getElementById('painelContent').style.display = 'block';
+    atualizarPainel();
+  } else {
+    document.getElementById('lockError').textContent = 'Senha incorreta.';
+  }
+}
+
+function atualizarPainel(){
+  const list = getGuests();
+  const totIgreja = list.reduce((acc, c) => acc + (c.iraIgreja ? (c.adIgreja + c.crIgreja) : 0), 0);
+  const totPizza = list.reduce((acc, c) => acc + (c.iraPizza ? (c.adPizza + c.crPizza) : 0), 0);
+  
+  document.getElementById('totalIgreja').textContent = totIgreja;
+  document.getElementById('totalPizza').textContent = totPizza;
+
+  const ul = document.getElementById('painelList');
+  ul.innerHTML = '';
+  if(!list.length){
+    ul.innerHTML = '<li style="font-size:12px;color:var(--mid);text-align:center;padding:1rem;">Nenhuma resposta recebida.</li>';
+  } else {
+    list.forEach(g => {
+      const li = document.createElement('li');
+      li.className = 'guest-item';
+      li.innerHTML = `
+        <strong>${g.nome}</strong><br>
+        ⛪ Igreja: ${g.iraIgreja ? `✅ (${g.adIgreja} ad, ${g.crIgreja} cr)` : '—'}<br>
+        🍕 Pizza: ${g.iraPizza ? `✅ (${g.adPizza} ad, ${g.crPizza} cr)` : '—'}<br>
+        ${g.obs ? `<small>Obs: ${g.obs}</small>` : ''}
+      `;
+      ul.appendChild(li);
+    });
+  }
+}
+
+function limparDados(){
+  if(confirm('Tem certeza que deseja apagar todos os registros do painel?')){
+    try{ localStorage.removeItem(KEY); } catch(e){}
+    atualizarPainel();
+  }
+}
+</script>
+</body>
+</html>
