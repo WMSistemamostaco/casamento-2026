@@ -49,8 +49,12 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 .btn-maps:hover{background:var(--gold);color:white;border-color:var(--gold);}
 .church-farewell{font-size:14px;color:var(--mid);font-style:italic;margin-top:12px;letter-spacing:0.02em;}
 
-.btn-main-rsvp{display:inline-block;width:100%;padding:14px;margin-top:1.5rem;font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:500;letter-spacing:0.05em;background:var(--gold);color:white;border:none;border-radius:8px;cursor:pointer;text-align:center;box-shadow:0 2px 10px rgba(154,123,79,0.2);transition:background 0.2s;}
+/* Botões de Confirmação na Tela Principal */
+.btn-group-rsvp{display:flex;flex-direction:column;gap:10px;margin-top:1.5rem;}
+.btn-main-rsvp{display:block;width:100%;padding:14px;font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;letter-spacing:0.03em;background:var(--gold);color:white;border:none;border-radius:8px;cursor:pointer;text-align:center;box-shadow:0 2px 10px rgba(154,123,79,0.2);transition:background 0.2s;}
 .btn-main-rsvp:hover{background:var(--gold-light);}
+.btn-main-rsvp.btn-pizza{background:transparent;border:1.5px solid var(--gold);color:var(--dark);}
+.btn-main-rsvp.btn-pizza:hover{background:var(--gold-pale);}
 
 /* Modal de Confirmação (RSVP) */
 .rsvp-overlay{display:none;position:fixed;inset:0;background:rgba(44,36,22,0.7);z-index:999;align-items:center;justify-content:center;padding:1rem;}
@@ -60,9 +64,10 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 .rsvp-modal-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:500;color:var(--dark);}
 .rsvp-modal-close{background:none;border:none;font-size:26px;color:var(--mid);cursor:pointer;line-height:1;}
 
-.form-subtitle{font-size:13px;color:var(--mid);text-align:center;font-style:italic;margin-bottom:1.25rem;}
-.section-box{background:var(--cream);border:1px solid var(--light);border-radius:12px;padding:1.25rem;margin-bottom:1.25rem;}
-.section-header{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--dark);margin-bottom:0.75rem;border-bottom:1px dashed var(--gold-light);padding-bottom:6px;display:flex;align-items:center;gap:8px;}
+/* Abas no Modal */
+.rsvp-tabs{display:flex;gap:8px;margin-bottom:1.25rem;}
+.tab-btn{flex:1;padding:10px;font-family:'Cormorant Garamond',serif;font-size:16px;font-weight:600;background:var(--cream);border:1px solid var(--light);border-radius:8px;color:var(--mid);cursor:pointer;transition:all 0.2s;}
+.tab-btn.active{background:var(--gold);color:white;border-color:var(--gold);}
 
 /* Card Informativo da Pizza */
 .info-box-pizza{background:var(--gold-pale);border:1px solid var(--light);border-radius:10px;padding:1rem;margin-bottom:1rem;font-size:13.5px;color:var(--dark);line-height:1.5;}
@@ -77,10 +82,6 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 .field-group label{display:block;font-size:12px;letter-spacing:0.05em;text-transform:uppercase;color:var(--mid);margin-bottom:6px;font-weight:500;}
 .field-group input, .field-group select, .field-group textarea{width:100%;font-family:'EB Garamond',serif;font-size:16px;padding:10px 14px;border:1px solid var(--light);border-radius:8px;background:white;color:var(--dark);outline:none;transition:border-color 0.2s;}
 .field-group input:focus, .field-group select:focus, .field-group textarea:focus{border-color:var(--gold);}
-
-.radio-group{display:flex;gap:1.5rem;margin-top:6px;}
-.radio-option{display:flex;align-items:center;gap:6px;font-size:16px;cursor:pointer;}
-.radio-option input[type="radio"]{accent-color:var(--gold);width:16px;height:16px;}
 
 .row-fields{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-top:10px;}
 
@@ -97,7 +98,7 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
 
 /* Painel */
 .painel-btn{width:100%;padding:10px;font-size:13px;letter-spacing:0.1em;background:transparent;border:1px solid var(--light);color:var(--mid);border-radius:8px;cursor:pointer;margin-bottom:1rem;}
-.painel-overlay{display:none;position:fixed;inset:0;background:rgba(44,36,22,0.6);z-index:1000;align-items:center;justify-content:center;padding:1rem;}
+.painel-overlay{display:none;position fixed;inset:0;background:rgba(44,36,22,0.6);z-index:1000;align-items:center;justify-content:center;padding:1rem;}
 .painel-overlay.active{display:flex;}
 .painel-modal{background:var(--cream);border-radius:16px;padding:2rem;width:100%;max-width:480px;max-height:90vh;overflow-y:auto;}
 .painel-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;}
@@ -146,86 +147,65 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
       <div class="church-farewell">Os noivos se despedem na igreja.</div>
     </div>
 
-    <!-- Botão que abre a janela de confirmação -->
-    <button class="btn-main-rsvp" onclick="abrirRSVP()">✉️ Confirmar Presença</button>
+    <!-- Botões Separados para Cada Evento -->
+    <div class="btn-group-rsvp">
+      <button class="btn-main-rsvp" onclick="abrirRSVP('igreja')">⛪ Confirmar Presença na Igreja</button>
+      <button class="btn-main-rsvp btn-pizza" onclick="abrirRSVP('pizza')">🍕 Confirmar Presença na Pizzaria</button>
+    </div>
   </div>
 
   <button class="painel-btn" onclick="abrirPainel()">⚙️ Painel dos Noivos</button>
 </div>
 
-<!-- Janela Popup / Modal de Confirmação de Presença -->
+<!-- Janela Popup / Modal de Confirmação -->
 <div class="rsvp-overlay" id="rsvpOverlay" onclick="fecharRSVPFora(event)">
   <div class="rsvp-modal">
     <div class="rsvp-modal-header">
-      <span class="rsvp-modal-title">Confirmação de Presença</span>
+      <span class="rsvp-modal-title" id="modalTitle">Confirmar Presença</span>
       <button class="rsvp-modal-close" onclick="fecharRSVP()">&times;</button>
     </div>
 
-    <div id="formCard">
-      <p class="form-subtitle">Por favor, preencha os dados abaixo para confirmar sua presença</p>
+    <!-- Abas para Escolha de Evento -->
+    <div class="rsvp-tabs">
+      <button class="tab-btn" id="tabIgrejaBtn" onclick="trocarAba('igreja')">⛪ Igreja</button>
+      <button class="tab-btn" id="tabPizzaBtn" onclick="trocarAba('pizza')">🍕 Pizzaria</button>
+    </div>
 
-      <!-- Dados Pessoais -->
+    <div id="formCard">
+      <!-- Nome Apenas (Telefone e E-mail Removidos) -->
       <div class="field-group">
-        <label for="guestName">Nome Completo *</label>
+        <label for="guestName">Seu Nome Completo *</label>
         <input type="text" id="guestName" placeholder="Insira seu nome completo" maxlength="80"/>
       </div>
 
-      <div class="field-group">
-        <label for="guestPhone">Telefone / WhatsApp *</label>
-        <input type="tel" id="guestPhone" placeholder="(43) 99999-9999" maxlength="15"/>
-      </div>
-
-      <div class="field-group">
-        <label for="guestEmail">E-mail</label>
-        <input type="email" id="guestEmail" placeholder="exemplo@email.com"/>
-      </div>
-
-      <!-- SEÇÃO 1: IGREJA -->
-      <div class="section-box">
-        <div class="section-header">⛪ Cerimônia Religiosa (Igreja)</div>
-        
-        <div class="field-group">
-          <label>Você irá à cerimônia na igreja? *</label>
-          <div class="radio-group">
-            <label class="radio-option">
-              <input type="radio" name="attendChurch" value="sim" checked onclick="toggleQtdIgreja(true)"> Sim
-            </label>
-            <label class="radio-option">
-              <input type="radio" name="attendChurch" value="nao" onclick="toggleQtdIgreja(false)"> Não
-            </label>
+      <!-- FORMULÁRIO IGREJA -->
+      <div id="formIgreja">
+        <div class="row-fields">
+          <div class="field-group">
+            <label for="qtdAdultosIgreja">Adultos na Igreja (com você)</label>
+            <select id="qtdAdultosIgreja">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5 ou mais</option>
+            </select>
           </div>
-        </div>
 
-        <div id="churchFields">
-          <div class="row-fields">
-            <div class="field-group">
-              <label for="qtdAdultosIgreja">Adultos (com você)</label>
-              <select id="qtdAdultosIgreja">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5 ou mais</option>
-              </select>
-            </div>
-
-            <div class="field-group">
-              <label for="qtdCriancasIgreja">Crianças</label>
-              <select id="qtdCriancasIgreja">
-                <option value="0">0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3 ou mais</option>
-              </select>
-            </div>
+          <div class="field-group">
+            <label for="qtdCriancasIgreja">Crianças na Igreja</label>
+            <select id="qtdCriancasIgreja">
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3 ou mais</option>
+            </select>
           </div>
         </div>
       </div>
 
-      <!-- SEÇÃO 2: PIZZARIA -->
-      <div class="section-box">
-        <div class="section-header">🍕 Comemoração na Pizzaria</div>
-
+      <!-- FORMULÁRIO PIZZARIA -->
+      <div id="formPizza" style="display:none;">
         <div class="info-box-pizza">
           <p>Após a cerimônia, a partir das <strong>18h30</strong>, reservamos um espaço na <strong>Pizzaria O Casarão</strong> (<a class="pizza-link-insta" href="https://www.instagram.com/ocasaraotwohalfspizza/" target="_blank">@ocasaraotwohalfspizza</a>) para comemorarmos juntos!</p>
           <p>Pedimos a gentileza de confirmar até o dia <strong>08/08/2026</strong>.</p>
@@ -239,47 +219,33 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
           </div>
         </div>
 
-        <div class="field-group">
-          <label>Você participará do rodízio de pizza? *</label>
-          <div class="radio-group">
-            <label class="radio-option">
-              <input type="radio" name="attendPizza" value="sim" checked onclick="toggleQtdPizza(true)"> Sim
-            </label>
-            <label class="radio-option">
-              <input type="radio" name="attendPizza" value="nao" onclick="toggleQtdPizza(false)"> Não
-            </label>
+        <div class="row-fields">
+          <div class="field-group">
+            <label for="qtdAdultosPizza">Adultos na Pizza (com você)</label>
+            <select id="qtdAdultosPizza">
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5 ou mais</option>
+            </select>
           </div>
-        </div>
 
-        <div id="pizzaFields">
-          <div class="row-fields">
-            <div class="field-group">
-              <label for="qtdAdultosPizza">Adultos (com você)</label>
-              <select id="qtdAdultosPizza">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5 ou mais</option>
-              </select>
-            </div>
-
-            <div class="field-group">
-              <label for="qtdCriancasPizza">Crianças (4 a 7 anos)</label>
-              <select id="qtdCriancasPizza">
-                <option value="0">0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3 ou mais</option>
-              </select>
-            </div>
+          <div class="field-group">
+            <label for="qtdCriancasPizza">Crianças (4 a 7 anos)</label>
+            <select id="qtdCriancasPizza">
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3 ou mais</option>
+            </select>
           </div>
         </div>
       </div>
 
       <div class="field-group">
         <label for="guestObs">Observações</label>
-        <textarea id="guestObs" rows="3" placeholder="Restrições alimentares, recados para os noivos..."></textarea>
+        <textarea id="guestObs" rows="2" placeholder="Recado para os noivos ou observação..."></textarea>
       </div>
 
       <button class="btn-confirm" id="confirmBtn" onclick="confirmar()">Confirmar Presença</button>
@@ -331,23 +297,35 @@ const WPP = '5543988145521';
 const SENHA = 'Amanda2026';
 const KEY = 'casamento_aw2026_guests';
 
-/* Controle do Modal RSVP */
-function abrirRSVP(){
+let abaAtual = 'igreja';
+
+function abrirRSVP(aba){
   document.getElementById('rsvpOverlay').classList.add('active');
+  document.getElementById('formCard').style.display = 'block';
+  document.getElementById('successCard').style.display = 'none';
+  trocarAba(aba);
 }
+
 function fecharRSVP(){
   document.getElementById('rsvpOverlay').classList.remove('active');
 }
+
 function fecharRSVPFora(e){
   if(e.target === document.getElementById('rsvpOverlay')) fecharRSVP();
 }
 
-function toggleQtdIgreja(willGo){
-  document.getElementById('churchFields').style.display = willGo ? 'block' : 'none';
-}
+function trocarAba(aba){
+  abaAtual = aba;
+  const isIgreja = aba === 'igreja';
+  
+  document.getElementById('tabIgrejaBtn').className = isIgreja ? 'tab-btn active' : 'tab-btn';
+  document.getElementById('tabPizzaBtn').className = !isIgreja ? 'tab-btn active' : 'tab-btn';
 
-function toggleQtdPizza(willGo){
-  document.getElementById('pizzaFields').style.display = willGo ? 'block' : 'none';
+  document.getElementById('formIgreja').style.display = isIgreja ? 'block' : 'none';
+  document.getElementById('formPizza').style.display = !isIgreja ? 'block' : 'none';
+
+  document.getElementById('modalTitle').textContent = isIgreja ? 'Confirmar Presença • Igreja' : 'Confirmar Presença • Pizzaria';
+  document.getElementById('statusMsg').textContent = '';
 }
 
 function getGuests(){ try{ return JSON.parse(localStorage.getItem(KEY)) || []; } catch(e){ return []; } }
@@ -355,20 +333,7 @@ function saveGuests(list){ localStorage.setItem(KEY, JSON.stringify(list)); }
 
 async function confirmar(){
   const nome = document.getElementById('guestName').value.trim();
-  const telefone = document.getElementById('guestPhone').value.trim();
-  const email = document.getElementById('guestEmail').value.trim();
   const obs = document.getElementById('guestObs').value.trim();
-
-  // Igreja
-  const iraIgreja = document.querySelector('input[name="attendChurch"]:checked').value === 'sim';
-  const adIgreja = iraIgreja ? parseInt(document.getElementById('qtdAdultosIgreja').value) : 0;
-  const crIgreja = iraIgreja ? parseInt(document.getElementById('qtdCriancasIgreja').value) : 0;
-
-  // Pizzaria
-  const iraPizza = document.querySelector('input[name="attendPizza"]:checked').value === 'sim';
-  const adPizza = iraPizza ? parseInt(document.getElementById('qtdAdultosPizza').value) : 0;
-  const crPizza = iraPizza ? parseInt(document.getElementById('qtdCriancasPizza').value) : 0;
-
   const statusMsg = document.getElementById('statusMsg');
   const btn = document.getElementById('confirmBtn');
 
@@ -376,34 +341,38 @@ async function confirmar(){
     statusMsg.textContent = 'Por favor, informe seu nome completo.';
     return;
   }
-  if(!telefone){
-    statusMsg.textContent = 'Por favor, informe seu telefone/WhatsApp.';
-    return;
-  }
 
   btn.disabled = true;
   statusMsg.textContent = 'Enviando confirmação...';
 
+  const isIgreja = abaAtual === 'igreja';
+  const adIgreja = isIgreja ? parseInt(document.getElementById('qtdAdultosIgreja').value) : 0;
+  const crIgreja = isIgreja ? parseInt(document.getElementById('qtdCriancasIgreja').value) : 0;
+
+  const adPizza = !isIgreja ? parseInt(document.getElementById('qtdAdultosPizza').value) : 0;
+  const crPizza = !isIgreja ? parseInt(document.getElementById('qtdCriancasPizza').value) : 0;
+
   const now = new Date().toLocaleString('pt-BR');
   const list = getGuests();
   const record = { 
-    nome, telefone, email, obs, time: now,
-    iraIgreja, adIgreja, crIgreja,
-    iraPizza, adPizza, crPizza
+    nome, obs, time: now,
+    iraIgreja: isIgreja, adIgreja, crIgreja,
+    iraPizza: !isIgreja, adPizza, crPizza
   };
   list.push(record);
   saveGuests(list);
 
-  const resumoIgreja = iraIgreja ? `SIM (${adIgreja} Ad, ${crIgreja} Cr)` : 'NÃO';
-  const resumoPizza = iraPizza ? `SIM (${adPizza} Ad, ${crPizza} Cr)` : 'NÃO';
+  const eventoTexto = isIgreja 
+    ? `⛪ Cerimônia na Igreja (${adIgreja} adulto(s), ${crIgreja} criança(s))` 
+    : `🍕 Rodízio na Pizzaria (${adPizza} adulto(s), ${crPizza} criança(s))`;
 
   // EmailJS
   try {
     await emailjs.send(SERVICE, TEMPLATE, {
       guest_name: nome,
-      guest_count: `Igreja: ${resumoIgreja} | Pizza: ${resumoPizza}`,
+      guest_count: eventoTexto,
       confirmed_at: now,
-      tipo: `Tel: ${telefone} | Email: ${email} | Obs: ${obs}`
+      tipo: `Obs: ${obs || 'Nenhuma'}`
     });
   } catch(e){ console.error(e); }
 
@@ -412,21 +381,17 @@ async function confirmar(){
   const successCard = document.getElementById('successCard');
   successCard.style.display = 'block';
 
-  let msgSucesso = `Obrigado, <strong>${nome}</strong>!<br>Sua resposta foi registrada com sucesso.<br><br>`;
-  msgSucesso += `⛪ <strong>Igreja:</strong> ${iraIgreja ? 'Presença confirmada' : 'Não comparecerá'}<br>`;
-  msgSucesso += `🍕 <strong>Pizzaria:</strong> ${iraPizza ? 'Presença confirmada' : 'Não comparecerá'}`;
-
+  let msgSucesso = `Obrigado, <strong>${nome}</strong>!<br>Sua presença foi confirmada para:<br><br><strong>${eventoTexto}</strong>`;
   document.getElementById('successMsg').innerHTML = msgSucesso;
 
   // Texto do WhatsApp
   const wppText = encodeURIComponent(
-    `Olá! Sou ${nome} e respondi à confirmação de presença do casamento:\n\n` +
-    `⛪ *Igreja:* ${iraIgreja ? `Sim (${adIgreja} adulto(s), ${crIgreja} criança(s))` : 'Não'}\n` +
-    `🍕 *Rodízio de Pizza:* ${iraPizza ? `Sim (${adPizza} adulto(s), ${crPizza} criança(s))` : 'Não'}\n` +
-    (telefone ? `📞 *Telefone:* ${telefone}\n` : '') +
+    `Olá! Sou ${nome} e confirmei presença no casamento:\n\n` +
+    `📌 *Evento:* ${eventoTexto}\n` +
     (obs ? `💬 *Obs:* ${obs}` : '')
   );
   document.getElementById('wppBtn').href = 'https://wa.me/' + WPP + '?text=' + wppText;
+  btn.disabled = false;
 }
 
 /* Painel */
@@ -461,9 +426,9 @@ function atualizarPainel(){
       const li = document.createElement('li');
       li.className = 'guest-item';
       li.innerHTML = `
-        <strong>${g.nome}</strong> (${g.telefone})<br>
-        ⛪ Igreja: ${g.iraIgreja ? `✅ (${g.adIgreja} ad, ${g.crIgreja} cr)` : '❌ Não'}<br>
-        🍕 Pizza: ${g.iraPizza ? `✅ (${g.adPizza} ad, ${g.crPizza} cr)` : '❌ Não'}<br>
+        <strong>${g.nome}</strong><br>
+        ⛪ Igreja: ${g.iraIgreja ? `✅ (${g.adIgreja} ad, ${g.crIgreja} cr)` : '—'}<br>
+        🍕 Pizza: ${g.iraPizza ? `✅ (${g.adPizza} ad, ${g.crPizza} cr)` : '—'}<br>
         ${g.obs ? `<small>Obs: ${g.obs}</small>` : ''}
       `;
       ul.appendChild(li);
@@ -472,7 +437,7 @@ function atualizarPainel(){
 }
 
 function limparDados(){
-  if(confirm('Tem certeza que deseja apagar os registros?')){
+  if(confirm('Tem certeza que deseja apagar todos os registros do painel?')){
     localStorage.removeItem(KEY);
     atualizarPainel();
   }
