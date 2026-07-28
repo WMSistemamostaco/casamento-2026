@@ -399,7 +399,7 @@ function confirmar(){
     iraPizza: !isIgreja, adPizza, crPizza
   };
   
-  // 1. Salva localmente (com proteção para navegadores mobile restritos)
+  // 1. Salva localmente
   list.push(record);
   saveGuests(list);
 
@@ -407,7 +407,7 @@ function confirmar(){
     ? `⛪ Cerimônia na Igreja (${adIgreja} adulto(s), ${crIgreja} criança(s))` 
     : `🍕 Rodízio na Pizzaria (${adPizza} adulto(s), ${crPizza} criança(s))`;
 
-  // 2. Transição INSTANTÂNEA para a tela de sucesso (sem travar esperando resposta de rede)
+  // 2. Transição INSTANTÂNEA para a tela de sucesso
   document.getElementById('formCard').style.display = 'none';
   const successCard = document.getElementById('successCard');
   if(successCard) successCard.style.display = 'block';
@@ -425,14 +425,17 @@ function confirmar(){
   const wppBtn = document.getElementById('wppBtn');
   if(wppBtn) wppBtn.href = 'https://wa.me/' + WPP + '?text=' + wppText;
 
-  // 4. Disparo assíncrono do e-mail em segundo plano
+  // 4. Disparo assíncrono do e-mail via EmailJS
   if (typeof emailjs !== 'undefined') {
     emailjs.send(SERVICE, TEMPLATE, {
       guest_name: nome,
       guest_count: eventoTexto,
       confirmed_at: now,
+      guest_obs: obs || 'Nenhuma',
       tipo: `Obs: ${obs || 'Nenhuma'}`
-    }, PUBLIC_KEY).catch(function(err){
+    }, PUBLIC_KEY).then(function(res) {
+      console.log('Email enviado com sucesso!', res.status, res.text);
+    }).catch(function(err) {
       console.warn('Envio do EmailJS em segundo plano falhou:', err);
     });
   }
