@@ -290,22 +290,10 @@ body::before{content:'';position:fixed;inset:0;background-image:radial-gradient(
   </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
-const SERVICE = 'service_5nd34jt';
-const TEMPLATE = 'template_casamento';
-const PUBLIC_KEY = 'h33oxWzwErwi8kwUF';
 const WPP = '5543988145521';
 const SENHA = 'Amanda2026';
 const KEY = 'casamento_aw2026_guests';
-
-if (typeof emailjs !== 'undefined') {
-  try {
-    emailjs.init({ publicKey: PUBLIC_KEY });
-  } catch(e) {
-    console.warn('Erro ao inicializar EmailJS:', e);
-  }
-}
 
 let abaAtual = 'igreja';
 
@@ -407,7 +395,7 @@ function confirmar(){
     ? `⛪ Cerimônia na Igreja (${adIgreja} adulto(s), ${crIgreja} criança(s))` 
     : `🍕 Rodízio na Pizzaria (${adPizza} adulto(s), ${crPizza} criança(s))`;
 
-  // 2. Transição INSTANTÂNEA para a tela de sucesso
+  // 2. Transição para a tela de sucesso
   document.getElementById('formCard').style.display = 'none';
   const successCard = document.getElementById('successCard');
   if(successCard) successCard.style.display = 'block';
@@ -424,21 +412,6 @@ function confirmar(){
   );
   const wppBtn = document.getElementById('wppBtn');
   if(wppBtn) wppBtn.href = 'https://wa.me/' + WPP + '?text=' + wppText;
-
-  // 4. Disparo assíncrono do e-mail via EmailJS
-  if (typeof emailjs !== 'undefined') {
-    emailjs.send(SERVICE, TEMPLATE, {
-      guest_name: nome,
-      guest_count: eventoTexto,
-      confirmed_at: now,
-      guest_obs: obs || 'Nenhuma',
-      tipo: `Obs: ${obs || 'Nenhuma'}`
-    }, PUBLIC_KEY).then(function(res) {
-      console.log('Email enviado com sucesso!', res.status, res.text);
-    }).catch(function(err) {
-      console.warn('Envio do EmailJS em segundo plano falhou:', err);
-    });
-  }
 
   if(btn) btn.disabled = false;
 }
